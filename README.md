@@ -52,6 +52,6 @@ installr is particularly useful with Macs with T2 chips, which do not support Ne
 * Running installr:
   * Start up in Recovery mode.
   * Open Terminal (from the Utilities menu if in Recovery).
-  * `hdiutil mount <your_bootstrap_dmg_url>`
+  * `hdiutil attach <your_bootstrap_dmg_url>`
   * `/Volumes/install/run` (use `sudo` if not in Recovery)
 
