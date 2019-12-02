@@ -5,9 +5,9 @@
 # additional packagesfound in a packages folder in the same directory
 # as this script
 
-if [[ $EUID != 0 ]] ; then
-    echo "installr: Please run this as root, or via sudo."
-    exit -1
+if [[ $UID -ne 0 ]]; then
+    echo "$0 must be run as root, or via sudo. Please enter your password:"
+    exec sudo bash "$0" "$@"
 fi
 
 INDEX=0
@@ -19,8 +19,26 @@ IFS=$'\n'
 BASENAME=${0##*/}
 THISDIR=${0%$BASENAME}
 PACKAGESDIR="${THISDIR}packages"
-INSTALLMACOSAPP=$(echo "${THISDIR}Install macOS"*.app)
-STARTOSINSTALL=$(echo "${THISDIR}Install macOS"*.app/Contents/Resources/startosinstall)
+
+prompt="Please select the install:"
+options=( $(find "${THISDIR%/1}" -maxdepth 1 -iname "install macos*" | while read LINE; do echo "${LINE##*/}" ; done ) )
+
+PS3="$prompt "
+select opt in "${options[@]}" "Quit" ; do 
+    if (( REPLY == 1 + "${#options[@]}" )) ; then
+        exit
+
+    elif (( REPLY > 0 && REPLY <= "${#options[@]}" )) ; then
+        echo  "You picked $opt which is $REPLY"
+
+    else
+        echo "Invalid option. Try another one."
+    fi
+done    
+
+
+INSTALLMACOSAPP=$(echo "${THISDIR%/1}$opt)
+STARTOSINSTALL=$(echo "${THISDIR%/1}$opt)/Contents/Resources/startosinstall)
 
 if [ ! -e "$STARTOSINSTALL" ]; then
     echo "Can't find an Install macOS app containing startosinstall in this script's directory!"
