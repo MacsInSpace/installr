@@ -10,6 +10,11 @@ if [[ $UID -ne 0 ]]; then
     exec sudo bash "$0" "$@"
 fi
 
+until [[ $(/usr/bin/pmset -g ps) == *"AC Power"* ]]; do
+    echo "Please connect a Power Adapter to continue.."
+    sleep 5
+done
+
 INDEX=0
 OLDIFS=$IFS
 IFS=$'\n'
