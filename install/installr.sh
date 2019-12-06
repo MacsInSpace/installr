@@ -23,9 +23,18 @@ IFS=$'\n'
 # so we get to use Bash pattern matching
 BASENAME=${0##*/}
 THISDIR=${0%$BASENAME}
-PACKAGESDIR="${THISDIR}packages"
 
-prompt="Please select the install:"
+echo "
+
+****** Welcome to the installr! ******
+
+"
+
+prompt="
+
+Please select the Mac OS version you wish to install:
+"
+
 options=( $(find "${THISDIR%/1}" -maxdepth 1 -iname "install macos*" | while read LINE; do echo "${LINE##*/}" ; done ) )
 
 PS3="$prompt "
@@ -34,14 +43,26 @@ select opt in "${options[@]}" "Quit" ; do
         exit
 
     elif (( REPLY > 0 && REPLY <= "${#options[@]}" )) ; then
-        echo  "You picked $opt which is $REPLY"
+        
 
-    else
-        echo "Invalid option. Try another one."
-    fi
-done    
+prompt2="
+
+Please select the Packages list to install:
 
 
+"
+
+options2=( $(find "${THISDIR%/1}" -maxdepth 1 -iname "*packages*" | while read LINE; do echo "${LINE##*/}" ; done ) )
+
+
+PS3="$prompt2 "
+select opt2 in "${options2[@]}" "Quit" ; do 
+    if (( REPLY == 1 + "${#options2[@]}" )) ; then
+        exit
+
+    elif (( REPLY > 0 && REPLY <= "${#options2[@]}" )) ; then
+
+PACKAGESDIR=$(echo "${THISDIR%/1}$opt2")
 INSTALLMACOSAPP=$(echo "${THISDIR%/1}$opt")
 STARTOSINSTALL=$(echo "${THISDIR%/1}$opt/Contents/Resources/startosinstall")
 
@@ -50,7 +71,6 @@ if [ ! -e "$STARTOSINSTALL" ]; then
     exit -1
 fi
 
-echo "****** Welcome to installr! ******"
 echo "macOS will be installed from:"
 echo "    ${INSTALLMACOSAPP}"
 echo "these additional packages will also be installed:"
@@ -100,4 +120,22 @@ done
 
 # kick off the OS install
 eval $CMD
+
+
+IFS=$OLDIFS
+
+
+    exit 0
+
+    else
+        echo "Invalid option. Try another one."
+    fi
+done  
+    exit 0
+
+    else
+        echo "Invalid option. Try another one."
+    fi
+done 
+
 
