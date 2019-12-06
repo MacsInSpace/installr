@@ -43,7 +43,7 @@ done
 
 
 INSTALLMACOSAPP=$(echo "${THISDIR%/1}$opt")
-STARTOSINSTALL=$(echo "${THISDIR%/1}$opt")/Contents/Resources/startosinstall")
+STARTOSINSTALL=$(echo "${THISDIR%/1}$opt/Contents/Resources/startosinstall")
 
 if [ ! -e "$STARTOSINSTALL" ]; then
     echo "Can't find an Install macOS app containing startosinstall in this script's directory!"
