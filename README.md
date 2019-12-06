@@ -1,11 +1,11 @@
 ### macsinspace installr modifications
 
 -Added a dynamic menu for any "Insall MacOS***.app" applications added to the DMG<br>
- Just drop the extra installer app into the install folder along side the others.<br>
+ Just drop the extra installer app into the install folder along side the others.<br><br>
 -Added a dynamic menu for any *package* folders added to the DMG. <br>
- Just add the word "package" to the folder name to add it to the menu.<br>
--Added a check for power plugged in.<br>
--Added check for admin or enter root password without* exiting.<br>
+ Just add the word "package" to the folder name to add it to the menu.<br><br>
+-Added a check for power plugged in.<br><br>
+-Added check for admin or enter root password without* exiting.<br><br>
 
 ### installr
 
