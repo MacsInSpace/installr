@@ -1,4 +1,13 @@
-## installr
+### macsinspace installr modifications
+
+-Added a dynamic menu for any "Insall MacOS***.app" applications added to the DMG
+ Just drop the extra installer app into the install folder along side the others.
+-Added a dynamic menu for any *package* folders added to the DMG. 
+ Just add the word "package" to the folder name to add it to the menu.
+-Added a check for power plugged in.
+-Added check for admin or enter root password without* exiting.
+
+### installr
 
 A bare-bones tool to install macOS and a set of packages on a target volume.
 Typically these would be packages that "enroll" the machine into your management system; upon completion of the macOS install these tools would take over and continue the setup and configuration of the machine.
