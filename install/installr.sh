@@ -26,7 +26,7 @@ THISDIR=${0%$BASENAME}
 
 echo "
 
-****** Welcome to the eduSTAR installr! ******
+****** Welcome to the OSX installr! ******
 
 "
 
