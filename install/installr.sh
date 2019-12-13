@@ -26,14 +26,13 @@ THISDIR=${0%$BASENAME}
 
 echo "
 
-****** Welcome to the installr! ******
+****** Welcome to the eduSTAR installr! ******
 
 "
 
 prompt="
 
-Please select the Mac OS version you wish to install:
-"
+Please select the Mac OS version you wish to install:"
 
 options=( $(find "${THISDIR%/1}" -maxdepth 1 -iname "install macos*" | while read LINE; do echo "${LINE##*/}" ; done ) )
 
@@ -43,16 +42,23 @@ select opt in "${options[@]}" "Quit" ; do
         exit
 
     elif (( REPLY > 0 && REPLY <= "${#options[@]}" )) ; then
-        
+
+    
+INSTALLMACOSAPP=$(echo "${THISDIR%/1}$opt")
+STARTOSINSTALL=$(echo "${THISDIR%/1}$opt/Contents/Resources/startosinstall")
+
+if [ ! -e "$STARTOSINSTALL" ]; then
+    echo "Can't find an Install macOS app containing startosinstall in this script's directory!"
+    exit -1
+fi
+
+
 
 prompt2="
 
-Please select the Packages list to install:
+Please select the Packages list to install:"
 
-
-"
-
-options2=( $(find "${THISDIR%/1}" -maxdepth 1 -iname "*packages*" | while read LINE; do echo "${LINE##*/}" ; done ) )
+options2=( $(find "${THISDIR%/1}" -maxdepth 1 -iname "*package*" -or -iname "*pkg*" -or -iname "*pack*" | while read LINE; do echo "${LINE##*/}" ; done ) )
 
 
 PS3="$prompt2 "
@@ -62,14 +68,9 @@ select opt2 in "${options2[@]}" "Quit" ; do
 
     elif (( REPLY > 0 && REPLY <= "${#options2[@]}" )) ; then
 
-PACKAGESDIR=$(echo "${THISDIR%/1}$opt2")
-INSTALLMACOSAPP=$(echo "${THISDIR%/1}$opt")
-STARTOSINSTALL=$(echo "${THISDIR%/1}$opt/Contents/Resources/startosinstall")
+        
 
-if [ ! -e "$STARTOSINSTALL" ]; then
-    echo "Can't find an Install macOS app containing startosinstall in this script's directory!"
-    exit -1
-fi
+PACKAGESDIR=$(echo "${THISDIR%/1}$opt2")
 
 echo "macOS will be installed from:"
 echo "    ${INSTALLMACOSAPP}"
@@ -125,7 +126,7 @@ eval $CMD
 IFS=$OLDIFS
 
 
-    exit 0
+        exit 0
 
     else
         echo "Invalid option. Try another one."
@@ -137,5 +138,3 @@ done
         echo "Invalid option. Try another one."
     fi
 done 
-
-
