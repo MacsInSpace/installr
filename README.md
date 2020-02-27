@@ -7,6 +7,9 @@
 -Added a check for power plugged in.<br><br>
 -Added check for admin or enter root password without* exiting.<br><br>
 
+
+##Work in Progress. Rewriting using "Pashua" front end when "run" is run.
+
 ### installr
 
 A bare-bones tool to install macOS and a set of packages on a target volume.
